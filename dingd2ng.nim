@@ -48,7 +48,7 @@ proc onIrcEvent(client: AsyncIrc, event: IrcEvent) {.async.} =
   of EvMsg:
     if event.cmd == MPrivMsg:
       var msg = event.params[event.params.high]
-      if msg == "!test": await client.privmsg(event.origin, "hello")
+      # if msg == "!test": await client.privmsg(event.origin, "hello")
       if msg == "!lag":
         await client.privmsg(event.origin, formatFloat(client.getLag))
       if unicode.toLower(msg).contains("http"):
@@ -59,8 +59,8 @@ proc onIrcEvent(client: AsyncIrc, event: IrcEvent) {.async.} =
               await client.privmsg(event.origin, title)
     echo(event.raw)
 
-var client = newAsyncIrc(server, nick=nickname, realname="dingd2ng",
-                 joinChans = channels, callback = onIrcEvent)
+var client = newAsyncIrc(server, nick=nickname, user="dingd2ng", 
+              realname="dingd2ng", joinChans = channels, callback = onIrcEvent)
 asyncCheck client.run()
 
 runForever()
