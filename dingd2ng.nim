@@ -16,7 +16,7 @@ Usage:
 Options:
   --help                   Show this text.
   --version                Show version.
-  --server=<servername>    Connecto to specific server.
+  --server=<servername>    Connect to specific server.
   --nick=<nickname>        Use specific nickname.
 """
 
