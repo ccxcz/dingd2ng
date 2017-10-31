@@ -1,6 +1,40 @@
 import irc, asyncdispatch, strutils
 import htmltitle, unicode
 
+import strutils
+import docopt
+
+let doc = """
+dingd2ng IRC Bot. 
+Defaults to chat.freenode.net with nick dingd2ng in channel #yfb
+
+Usage:
+  dingd2ng [options] <channels>...
+
+Options:
+  --help                   Show this text.
+  --version                Show version.
+  --server=<servername>    Connecto to specific server.
+  --nick=<nickname>        Use specific nickname.
+"""
+
+let args = docopt(doc, version = "dingd2ng v0.2")
+
+var nickname = "dingd2ng"
+var server = "chat.freenode.net"
+var channels : seq[string] = @[]
+
+if args["--server"]:
+  server = $args["--server"]
+if args["<channels>"]:
+  for chan in @(args["<channels>"]):
+    channels.add($chan)
+if args["--nick"]:
+  nickname = $args["--nick"]
+
+echo("Connecting to IRC on server: ", server, " with nickname ", nickname,
+     " in channels: ", channels)
+
 proc onIrcEvent(client: AsyncIrc, event: IrcEvent) {.async.} =
   case event.typ
   of EvConnected:
@@ -21,8 +55,8 @@ proc onIrcEvent(client: AsyncIrc, event: IrcEvent) {.async.} =
               await client.privmsg(event.origin, title)
     echo(event.raw)
 
-var client = newAsyncIrc("chat.freenode.net", nick="dingd2ng",
-                 joinChans = @["#yfb"], callback = onIrcEvent)
+var client = newAsyncIrc(server, nick=nickname, realname="dingd2ng",
+                 joinChans = channels, callback = onIrcEvent)
 asyncCheck client.run()
 
 runForever()
