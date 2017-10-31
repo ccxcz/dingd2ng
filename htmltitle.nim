@@ -7,8 +7,11 @@ import httpclient, htmlparser
 import xmltree  # To use '$' for XmlNode
 
 proc getHtmlContents(URL : string) : string =
-  var client = newHttpClient()
-  return client.getContent(URL)
+  try:
+    var client = newHttpClient()
+    return client.getContent(URL)
+  except:
+    return ""
 
 proc readTitle*(URL : string) : string =
   var contents = getHtmlContents(URL)
