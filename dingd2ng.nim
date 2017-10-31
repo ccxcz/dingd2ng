@@ -34,9 +34,11 @@ if args["<channels>"]:
 if args["--nick"]:
   nickname = $args["--nick"]
 
-echo("Connecting to IRC on server: ", server, " with nickname ", nickname,
+echo("***********************************************************************")
+echo("** Connecting to IRC on server: ", server, " with nickname ", nickname,
      " in channels: ", channels)
-
+echo("***********************************************************************")
+     
 proc onIrcEvent(client: AsyncIrc, event: IrcEvent) {.async.} =
   case event.typ
   of EvConnected:
