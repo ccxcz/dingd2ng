@@ -6,7 +6,9 @@ import docopt
 
 let doc = """
 dingd2ng IRC Bot. 
-Defaults to chat.freenode.net with nick dingd2ng in channel #yfb
+Defaults to chat.freenode.net with nick dingd2ng.
+You need to specify the channels it needs to join.
+Remember to use quotes for channels: d"#channel"
 
 Usage:
   dingd2ng [options] <channels>...
