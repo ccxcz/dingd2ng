@@ -18,7 +18,7 @@ proc readTitle*(URL : string) : string =
   var s = newStringStream(contents)
   var node = parseHtml(s)
   for title in node.findAll("title"):
-    return title.innerText.splitLines().join(" ")
+    return title.innerText.splitLines().join(" ").strip()
 
 if isMainModule:
   echo(readTitle("https://twitter.com/YungTseTech/status/927440119836971008"))
